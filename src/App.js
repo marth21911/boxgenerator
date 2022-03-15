@@ -1,23 +1,37 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Box from './components/Boxes';
+
 
 function App() {
+  
+  const [boxes, setBoxes] = useState([
+  ]);
+  const [form, setForm] = useState("");
+
+  const onSubmitHandler = (event)=>{
+    event.preventDefault();
+  
+    const newState = [...boxes,form];
+    setBoxes(newState);
+
+    setForm("");
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hold on to yo butts</h1>
+      <form onSubmit={onSubmitHandler}>
+      <input value={form} onChange={(event)=>{setForm(event.target.value)}} type="text" name="addColor" id="addColor" placeholder='add Color'/>
+      <input type="submit" />
+      </form>
+      <div className='boxes'>
+      {
+        boxes.map((item,i) =>{
+        return <Box key = {i} color={item}/>
+      })
+    }
+</div>
     </div>
   );
 }
